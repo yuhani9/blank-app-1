@@ -152,9 +152,6 @@ with right:
         st.dataframe(show_df, use_container_width=True, height=260)
 
         # 選択 → 思考フロー表示
-        st.subheader("3) 思考フロー（1件表示）")
-        ids = df["id"].tolist()
-        selected_id = st.selectbox("表示するIDを選択", ids, index=0)
         row = df[df["id"] == selected_id].iloc[0].to_dict()
         st.subheader("3) 思考フロー（1件表示）")
         ids = df["id"].tolist()
