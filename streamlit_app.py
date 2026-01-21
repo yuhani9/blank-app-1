@@ -12,6 +12,14 @@ EMOTIONS = ["嬉しい", "安心", "怒り", "不安", "悲しい", "疲れ", "�
 def get_conn():
     return sqlite3.connect(DB_PATH, check_same_thread=False)
 
+def delete_entry(entry_id: int):
+    conn = get_conn()
+    cur = conn.cursor()
+    cur.execute("DELETE FROM entries WHERE id = ?", (int(entry_id),))
+    conn.commit()
+    conn.close()
+
+
 def init_db():
     conn = get_conn()
     cur = conn.cursor()
@@ -148,6 +156,24 @@ with right:
         ids = df["id"].tolist()
         selected_id = st.selectbox("表示するIDを選択", ids, index=0)
         row = df[df["id"] == selected_id].iloc[0].to_dict()
+                st.subheader("3) 思考フロー（1件表示）")
+        ids = df["id"].tolist()
+        selected_id = st.selectbox("表示するIDを選択", ids, index=0)
+
+        # ここから追加
+        col_a, col_b = st.columns([1, 3])
+        with col_a:
+            confirm = st.checkbox("このIDを削除する", value=False)
+        with col_b:
+            if st.button("削除（取り消し不可）", disabled=not confirm):
+                delete_entry(selected_id)
+                st.success(f"ID {selected_id} を削除しました。")
+                st.rerun()
+        # ここまで追加
+
+        row = df[df["id"] == selected_id].iloc[0].to_dict()
+        st.text(flow_text(row))
+
 
         st.text(flow_text(row))
 
