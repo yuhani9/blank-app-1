@@ -105,25 +105,38 @@ def plot_emotion_counts(df):
 
 # ---------- App ----------
 st.set_page_config(page_title="思考が見える日記", layout="wide")
-st.markdown(
-    """
-    <style>
-    body {
-        background-color: #ffffff;
-    }
-    .block-container {
-        padding-top: 2rem;
-    }
-    .stForm, .stDataFrame {
-        background-color: #f7f9fc;
-        padding: 1.2rem;
-        border-radius: 12px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
+st.markdown("""
+<style>
+/* 全体の余白と最大幅 */
+.block-container {max-width: 1100px; padding-top: 2.2rem;}
+
+/* 見出しの詰まりを改善 */
+h1, h2, h3 {letter-spacing: -0.02em;}
+
+/* フォームをカード化 */
+div[data-testid="stForm"] {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 18px 18px 6px 18px;
+  box-shadow: 0 8px 24px rgba(17,24,39,0.06);
+}
+
+/* 右側の「最近の記録」もカードっぽく */
+section[data-testid="stVerticalBlock"] > div:has(> div[data-testid="stDataFrame"]) {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 14px;
+}
+
+/* infoバーの青を弱める */
+div[data-testid="stAlert"] {
+  border-radius: 12px;
+}
+</style>
+""", unsafe_allow_html=True)
+
 
 st.title("思考が見える日記")
 
