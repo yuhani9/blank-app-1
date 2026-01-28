@@ -104,8 +104,8 @@ def plot_emotion_counts(df):
 
 
 # ---------- App ----------
-st.set_page_config(page_title="思考が見える日記（Supabase版）", layout="wide")
-st.title("思考が見える日記（Supabase版）")
+st.set_page_config(page_title="思考が見える日記", layout="wide")
+st.title("思考が見える日記")
 
 left, right = st.columns([1, 1])
 
