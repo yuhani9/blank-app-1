@@ -135,14 +135,24 @@ def plot_intensity(df: pd.DataFrame):
 
 def plot_emotion_counts(df: pd.DataFrame):
     if df.empty:
-        st.caption("データがありません。")
+        st.info("まだデータがありません。まず1件記録してみてください。")
         return
-    counts = df["emotion"].value_counts().sort_values(ascending=False)
-    fig = plt.figure()
-    plt.bar(counts.index, counts.values)
-    plt.xticks(rotation=45, ha="right")
-    plt.ylabel("count")
+
+    d = df.copy()
+    d["emotion"] = d["emotion"].fillna("不明").astype(str)
+
+    counts = d["emotion"].value_counts().sort_values(ascending=True)
+
+    fig, ax = plt.subplots()
+    ax.barh(counts.index, counts.values)  # 横棒の方が日本語に強い
+    ax.set_xlabel("count")
+
+    # 数値ラベルを付ける（地味に洗練される）
+    for i, v in enumerate(counts.values):
+        ax.text(v + 0.02, i, str(int(v)), va="center")
+
     st.pyplot(fig)
+
 
 
 def weekly_review(df: pd.DataFrame, days: int = 7):
@@ -296,6 +306,8 @@ else:
         st.text(flow_text(row))
 
     with st.expander("📊 可視化（30日）", expanded=False):
+        days = st.selectbox("表示期間", [7, 14, 30, 60, 90], index=2)
+        df_viz = load_entries(days=days)
         c1, c2 = st.columns(2)
         with c1:
             st.caption("感情強度の推移")
