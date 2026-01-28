@@ -163,7 +163,7 @@ st.set_page_config(page_title="思考が見える日記", layout="wide")
 st.markdown("""
 <style>
 /* 全体の余白と最大幅 */
-.block-container {max-width: 1200px; padding-top: 2rem;}
+.block-container {max-width: 1200px; margin: auto;}
 
 /* 見出しの詰まりを改善 */
 h1, h2, h3 {letter-spacing: -0.02em;}
