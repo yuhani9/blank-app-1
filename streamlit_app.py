@@ -105,6 +105,26 @@ def plot_emotion_counts(df):
 
 # ---------- App ----------
 st.set_page_config(page_title="思考が見える日記", layout="wide")
+st.markdown(
+    """
+    <style>
+    body {
+        background-color: #ffffff;
+    }
+    .block-container {
+        padding-top: 2rem;
+    }
+    .stForm, .stDataFrame {
+        background-color: #f7f9fc;
+        padding: 1.2rem;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 st.title("思考が見える日記")
 
 left, right = st.columns([1, 1])
