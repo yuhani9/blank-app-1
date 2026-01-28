@@ -3,6 +3,7 @@ from datetime import datetime, date, timedelta
 import pandas as pd
 import streamlit as st
 import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
 from supabase import create_client
 
 # -----------------------
@@ -96,16 +97,39 @@ def flow_text(row: dict) -> str:
 
 def plot_intensity(df: pd.DataFrame):
     if df.empty:
-        st.caption("データがありません。")
+        st.info("まだデータがありません。まず1件記録してみてください。")
         return
+
     d = df.copy()
-    d["entry_date"] = pd.to_datetime(d["entry_date"])
+    # 日付をdatetimeに（entry_dateが文字列でもOK）
+    d["entry_date"] = pd.to_datetime(d["entry_date"], errors="coerce")
+    d["intensity"] = pd.to_numeric(d["intensity"], errors="coerce")
+    d = d.dropna(subset=["entry_date", "intensity"])
     d = d.sort_values("entry_date")
-    fig = plt.figure()
-    plt.plot(d["entry_date"], d["intensity"])
-    plt.ylim(0, 10)
-    plt.xlabel("date")
-    plt.ylabel("intensity (0-10)")
+
+    if d.empty:
+        st.info("可視化できるデータがありません（日付/強度が欠損）。")
+        return
+
+    fig, ax = plt.subplots()
+    ax.plot(d["entry_date"], d["intensity"], marker="o")
+    ax.set_ylim(0, 10)
+    ax.set_xlabel("date")
+    ax.set_ylabel("intensity (0-10)")
+
+    # 直近30日だけにズーム（空グラフ感を消す）
+    start = (pd.Timestamp(date.today()) - pd.Timedelta(days=29))
+    end = pd.Timestamp(date.today()) + pd.Timedelta(days=1)
+    ax.set_xlim(start, end)
+
+    # 日付目盛りを読みやすく
+    ax.xaxis.set_major_locator(mdates.DayLocator(interval=7))
+    ax.xaxis.set_major_formatter(mdates.DateFormatter("%m/%d"))
+    fig.autofmt_xdate()
+
+    # 参照線（5を目安に）
+    ax.axhline(5, linewidth=1, linestyle="--")
+
     st.pyplot(fig)
 
 
