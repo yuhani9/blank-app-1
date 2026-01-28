@@ -1,19 +1,63 @@
-# 🎈 Blank app template
+# 思考が見える日記（Supabase版）
 
-A simple Streamlit app template for you to modify!
+Streamlit と Supabase（PostgreSQL）を用いて作成した、  
+**思考の流れを記録・可視化する日記アプリ**です。
 
-[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://blank-app-template.streamlit.app/)
+出来事 → 感情 → 解釈 → 欲求 → 次の行動  
+という流れを1件ずつ記録し、一覧表示や簡単な集計ができます。  
+SQLite ではなく Supabase を利用することで、  
+アプリが休止してもデータが消えない永続化を実現しています。
 
-### How to run it on your own machine
+---
 
-1. Install the requirements
+## アプリのURL（試用はこちら）
 
-   ```
-   $ pip install -r requirements.txt
-   ```
+👉 **https://blank-app-e7j78n6hss6.streamlit.app/**
 
-2. Run the app
+※ ログイン不要で誰でも閲覧・利用できます。
 
-   ```
-   $ streamlit run streamlit_app.py
-   ```
+---
+
+## 主な機能
+
+- 日記データの保存（Supabase に永続保存）
+- 最近30日分の記録一覧表示
+- 1件選択による「思考フロー」表示
+- 記録の削除
+- 感情強度の時系列グラフ
+- 感情カテゴリごとの回数集計
+- ページをリロードしてもデータが保持される
+
+---
+
+## 画面構成（概要）
+
+### 1. 今日の記録
+- 日付
+- 出来事
+- 感情カテゴリ
+- 感情の強度（0〜10）
+- 解釈
+- 欲求
+- 次の行動
+
+### 2. 最近の記録
+- 直近30日分の記録を一覧表示
+- IDを選択して詳細（思考フロー）を確認
+- 不要な記録は削除可能
+
+### 3. 可視化
+- 感情強度の推移（折れ線グラフ）
+- 感情カテゴリの回数（棒グラフ）
+
+---
+
+## 使用技術
+
+- **Python**
+- **Streamlit**
+- **Supabase（PostgreSQL）**
+- pandas
+- matplotlib
+
+---
