@@ -17,7 +17,7 @@ EMOTIONS = ["嬉しい", "安心", "怒り", "不安", "悲しい", "疲れ", "�
 KUMAMOTO_LAT = 32.825
 KUMAMOTO_LON = 130.739
 
-st.set_page_config(page_title="思考が見える日記", page_icon="🧠", layout="wide")
+st.set_page_config(page_title="MindTrace", page_icon="🧠", layout="wide")
 
 # ---- UI: max width / spacing ----
 st.markdown("""
@@ -287,7 +287,7 @@ def next_action_list(df: pd.DataFrame, max_items: int = 8) -> pd.DataFrame:
 # -----------------------
 # App
 # -----------------------
-st.title("🧠 思考が見える日記")
+st.title("🧠 MindTrace ")
 st.caption("出来事 → 感情 → 解釈 → 欲求 → 次の行動 を1分で整理")
 
 df = load_entries(days=30)
