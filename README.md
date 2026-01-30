@@ -1,4 +1,4 @@
-# 思考が見える日記（Supabase × Streamlit）
+# MindTrace（Supabase × Streamlit）
 
 「出来事 → 感情 → 解釈 → 欲求 → 次の行動」を1分で整理し、あとから振り返れる日記アプリです。  
 データは Supabase（PostgreSQL）に保存されるため、Streamlitアプリが休止しても記録が消えません。  
